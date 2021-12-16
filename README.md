@@ -18,11 +18,9 @@ npm init svelte@next my-app
 
 ### Supabase
 
-https://www.npmjs.com/package/svelte-supabase
+Follow guidance in this [blogpost](https://sjorswijsman.medium.com/setting-up-supabase-with-sveltekit-f6234fa1b54b)
 
-```bash
-npx svelte-add joshnuss/svelte-supabase
-```
+We can now import this Supabase client from anywhere in our Svelte project by importing: `import supabase from '$lib/db'`
 
 ## Developing
 
