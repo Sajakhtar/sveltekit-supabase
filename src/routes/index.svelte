@@ -9,7 +9,7 @@
       .select()
     if (error) throw new Error(error.message)
 
-    $: games = data
+    games = data
     return data
   }
 
