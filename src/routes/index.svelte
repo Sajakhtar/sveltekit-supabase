@@ -1,12 +1,15 @@
 <script>
   import supabase from '$lib/db'
 
+  let games = ''
+
   async function getData() {
     const { data, error } = await supabase
       .from('games')
       .select()
     if (error) throw new Error(error.message)
 
+    $: games = data
     return data
   }
 
@@ -21,6 +24,7 @@
       ]);
 
     if (error) throw new Error(error.message)
+    getData()
     return data;
   }
 
@@ -51,7 +55,7 @@
 {#await getData()}
   <p>Fetching data...</p>
 {:then data}
-  {#each data as game}
+  {#each games as game}
     <li>{game.title}</li>
   {/each}
 {:catch error}
