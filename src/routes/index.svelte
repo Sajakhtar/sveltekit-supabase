@@ -1,17 +1,41 @@
 <script>
   import supabase from '$lib/db'
+  import { readable, get } from 'svelte/store'
 
-  let games = ''
 
-  async function getData() {
-    const { data, error } = await supabase
+  const games = readable(null, (set) => {
+    supabase
       .from('games')
       .select()
-    if (error) throw new Error(error.message)
+      .then(({error, data}) => set(data))
 
-    games = data
-    return data
-  }
+    // add subscription
+    const subscription = supabase
+      .from('games')
+      // .on('*', (payload) => {
+      //   if (payload.eventType === "INSERT") {
+      //     // payload.old for UPDATE
+      //     set([...get(games), payload.new])
+      //   }
+      .on('INSERT', (payload) => {
+        set([...get(games), payload.new])
+      })
+      .subscribe()
+
+    return () => supabase.removeSubscription(subscription)
+  })
+
+  // let games = ''
+
+  // async function getData() {
+  //   const { data, error } = await supabase
+  //     .from('games')
+  //     .select()
+  //   if (error) throw new Error(error.message)
+
+  //   games = data
+  //   return data
+  // }
 
   let newGame
   let submit = false
@@ -24,9 +48,11 @@
       ]);
 
     if (error) throw new Error(error.message)
-    getData()
+    // getData()
     return data;
   }
+
+
 
 </script>
 
@@ -52,7 +78,7 @@
 
 
 <!-- Fetch Data from DB -->
-{#await getData()}
+<!-- {#await getData()}
   <p>Fetching data...</p>
 {:then data}
   {#each games as game}
@@ -61,4 +87,13 @@
 {:catch error}
   <p>Something went wrong while fetching the data:</p>
   <pre>{error}</pre>
-{/await}
+{/await} -->
+
+
+{#if $games}
+  {#each $games as game}
+    <li>{game.title}</li>
+  {/each}
+{:else}
+  Loading...
+{/if}

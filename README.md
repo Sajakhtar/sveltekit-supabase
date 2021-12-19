@@ -18,9 +18,11 @@ npm init svelte@next my-app
 
 ### Supabase
 
-Follow guidance in this [blogpost](https://sjorswijsman.medium.com/setting-up-supabase-with-sveltekit-f6234fa1b54b)
+Follow guidance in this [blogpost](https://sjorswijsman.medium.com/setting-up-supabase-with-sveltekit-f6234fa1b54b) to setup supabase, and reading/ writing to supbase tables.
 
 We can now import this Supabase client from anywhere in our Svelte project by importing: `import supabase from '$lib/db'`
+
+Follow guidance in this [video](https://www.youtube.com/watch?v=7_9rUtwM-q0) by [Svelte Mastery](https://www.youtube.com/c/SvelteMastery/videos) for subscription to database table for realtime updates.
 
 ## Developing
 
